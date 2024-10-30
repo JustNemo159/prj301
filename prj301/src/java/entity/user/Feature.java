@@ -11,25 +11,42 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class Feature {
-    private int id;
-    private String name;
+    private int FeatureID;
+    private String FeatureName;
     private String url;
-    private ArrayList<Role> roles = new ArrayList<>();
 
-    public int getId() {
-        return id;
+    public Feature() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Feature(int featureID, String featureName, String url) {
+        this.FeatureID = featureID;
+        this.FeatureName = featureName;
+        this.url = url;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String toString() {
+        return "Feature{" +
+                "FeatureID=" + FeatureID +
+                ", FeatureName='" + FeatureName + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getFeatureID() {
+        return FeatureID;
+    }
+
+    public void setFeatureID(int featureID) {
+        FeatureID = featureID;
+    }
+
+    public String getFeatureName() {
+        return FeatureName;
+    }
+
+    public void setFeatureName(String featureName) {
+        FeatureName = featureName;
     }
 
     public String getUrl() {
@@ -39,14 +56,4 @@ public class Feature {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public ArrayList<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(ArrayList<Role> roles) {
-        this.roles = roles;
-    }
-    
 }
-

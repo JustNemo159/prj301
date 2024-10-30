@@ -10,50 +10,61 @@ import entity.Product;
  * @author Admin
  */
 public class PlanCampain {
-    private int id;
-    private Plan plan;
-    private Product product;
-    private int quantity;
-    private float cost;
+    private int PlanCampainID;
+    private int PlanID;
+    private int ProductID;
+    private int Quantity;
+    private int Estimate;
 
-    public int getId() {
-        return id;
+    public PlanCampain() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public PlanCampain(int PlanCampainID, int PlanID, int ProductID, int Quantity, int Estimate) {
+        this.PlanCampainID = PlanCampainID;
+        this.PlanID = PlanID;
+        this.ProductID = ProductID;
+        this.Quantity = Quantity;
+        this.Estimate = Estimate;
+
     }
 
-    public Plan getPlan() {
-        return plan;
+    public int getPlanCampainID() {
+        return PlanCampainID;
     }
 
-    public void setPlan(Plan plan) {
-        this.plan = plan;
+    public void setPlanCampainID(int planCampainID) {
+        PlanCampainID = planCampainID;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getPlanID() {
+        return PlanID;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPlanID(int planID) {
+        PlanID = planID;
+    }
+
+    public int getProductID() {
+        return ProductID;
+    }
+
+    public void setProductID(int productID) {
+        ProductID = productID;
     }
 
     public int getQuantity() {
-        return quantity;
+        return Quantity;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        Quantity = quantity;
     }
 
-    public float getCost() {
-        return cost;
+    public int getEstimate() {
+        return Estimate;
     }
 
-    public void setCost(float cost) {
-        this.cost = cost;
+    public void setEstimate(int estimate) {
+        Estimate = estimate;
     }
-    
 }

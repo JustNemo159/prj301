@@ -4,49 +4,45 @@
  */
 package entity.user;
 
-import java.awt.Taskbar.Feature;
-import java.util.ArrayList;
-
 /**
  *
- * @author sonnt-local
+ * @author Admin
  */
 public class Role {
-        private int id;
-        private String name;
-        private ArrayList<User> users = new ArrayList<>();
-    private ArrayList<Feature> features = new ArrayList<>();
+    private int RoleID;
+    private String RoleName;
+    private String Description;
 
-    public int getId() {
-        return id;
+    public Role() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Role(int RoleID, String RoleName, String Description) {
+        this.RoleID = RoleID;
+        this.RoleName = RoleName;
+        this.Description = Description;
     }
 
-    public String getName() {
-        return name;
+    public int getRoleID() {
+        return RoleID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleID(int roleID) {
+        RoleID = roleID;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public String getRoleName() {
+        return RoleName;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
+    public void setRoleName(String roleName) {
+        RoleName = roleName;
     }
 
-    public ArrayList<Feature> getFeatures() {
-        return features;
+    public String getDescription() {
+        return Description;
     }
 
-    public void setFeatures(ArrayList<Feature> features) {
-        this.features = features;
+    public void setDescription(String description) {
+        Description = description;
     }
-    
 }

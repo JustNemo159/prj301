@@ -9,24 +9,42 @@ package entity;
  * @author sonnt-local
  */
 public class Department {
-    private int id;
-    private String name;
+    private int DepartmentID;
+    private String DepartmentName;
     private String type;
 
-    public int getId() {
-        return id;
+    public Department() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Department(int DepartmentID, String DepartmentName, String type) {
+        this.DepartmentID = DepartmentID;
+        this.DepartmentName = DepartmentName;
+        this.type = type;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String toString() {
+        return "Department{" +
+                "DepartmentID=" + DepartmentID +
+                ", DepartmentName='" + DepartmentName + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getDepartmentID() {
+        return DepartmentID;
+    }
+
+    public void setDepartmentID(int departmentID) {
+        DepartmentID = departmentID;
+    }
+
+    public String getDepartmentName() {
+        return DepartmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        DepartmentName = departmentName;
     }
 
     public String getType() {
@@ -36,5 +54,4 @@ public class Department {
     public void setType(String type) {
         this.type = type;
     }
-    
 }

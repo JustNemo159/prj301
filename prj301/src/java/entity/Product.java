@@ -9,23 +9,31 @@ package entity;
  * @author Admin
  */
 
-    public class Product {
-    private int id;
-    private String name;
+   public class Product {
+    private int ProductId;
+    private String ProductName;
 
-    public int getId() {
-        return id;
+    public Product() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Product(int ProductId, String ProductName) {
+        this.ProductId = ProductId;
+        this.ProductName = ProductName;
     }
 
-    public String getName() {
-        return name;
+    public int getProductId() {
+        return ProductId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductId(int productId) {
+        ProductId = productId;
+    }
+
+    public String getProductName() {
+        return ProductName;
+    }
+
+    public void setProductName(String productName) {
+        ProductName = productName;
     }
 }

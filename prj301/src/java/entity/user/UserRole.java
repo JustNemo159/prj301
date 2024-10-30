@@ -4,23 +4,23 @@
  */
 package entity.user;
 
+import java.awt.Taskbar.Feature;
 import java.util.ArrayList;
 
 /**
  *
  * @author sonnt-local
  */
-public class User {
+public class UserRole {
     private String UserName;
-    private String password;
+    private int RoleID;
 
-    public User() {
+    public UserRole() {
     }
 
-    public User(String UserName, String password) {
-
+    public UserRole(String UserName, int RoleID) {
         this.UserName = UserName;
-        this.password = password;
+        this.RoleID = RoleID;
     }
 
     public String getUserName() {
@@ -31,19 +31,11 @@ public class User {
         UserName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public int getRoleID() {
+        return RoleID;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "UserName='" + UserName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public void setRoleID(int roleID) {
+        RoleID = roleID;
     }
 }

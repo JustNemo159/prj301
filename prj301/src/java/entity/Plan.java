@@ -11,59 +11,71 @@ import java.util.ArrayList;
  * @author sonnt-local
  */
 public class Plan {
-    private int id;
-    private String name;
-    private Date start;
-    private Date end;
-    private Department dept;
-    private ArrayList<PlanCampain> campains = new ArrayList<>();
+    private int PlanID;
+    private String PlanName;
+    private String StartDate;
+    private String EndDate;
+    private int Quantity;
+    private int DepartmentID;
 
-    public ArrayList<PlanCampain> getCampains() {
-        return campains;
+    public Plan() {
     }
 
-    public void setCampains(ArrayList<PlanCampain> campains) {
-        this.campains = campains;
+    public Plan(int PlanID, String PlanName, String StartDate, String EndDate, int Quantity, int DepartmentID) {
+        this.PlanID = PlanID;
+        this.PlanName = PlanName;
+        this.StartDate = StartDate;
+        this.EndDate = EndDate;
+        this.Quantity = Quantity;
+        this.DepartmentID = DepartmentID;
+
     }
 
-    public int getId() {
-        return id;
+    public int getPlanID() {
+        return PlanID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPlanID(int planID) {
+        PlanID = planID;
     }
 
-    public String getName() {
-        return name;
+    public String getPlanName() {
+        return PlanName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPlanName(String planName) {
+        PlanName = planName;
     }
 
-    public Date getStart() {
-        return start;
+    public String getStartDate() {
+        return StartDate;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setStartDate(String startDate) {
+        StartDate = startDate;
     }
 
-    public Date getEnd() {
-        return end;
+    public String getEndDate() {
+        return EndDate;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setEndDate(String endDate) {
+        EndDate = endDate;
     }
 
-    public Department getDept() {
-        return dept;
+    public int getQuantity() {
+        return Quantity;
     }
 
-    public void setDept(Department dept) {
-        this.dept = dept;
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
     }
-    
+
+    public int getDepartmentID() {
+        return DepartmentID;
+    }
+
+    public void setDepartmentID(int departmentID) {
+        DepartmentID = departmentID;
+    }
 }
