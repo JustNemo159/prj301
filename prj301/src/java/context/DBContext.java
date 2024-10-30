@@ -16,7 +16,7 @@ public abstract class DBContext<T> {
     protected Connection connection;
     public DBContext()
     {
-        try {
+       try {
             String user = "sa";
             String pass = "123";
             String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=demoprj;trustServerCertificate=true;";
@@ -28,12 +28,6 @@ public abstract class DBContext<T> {
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
-    
-    public abstract void insert(T entity);
-    public abstract void update(T entity);
-    public abstract void delete(T entity);
-    public abstract ArrayList<T> list();
-    public abstract T get(int id);
+       
+}
 }
