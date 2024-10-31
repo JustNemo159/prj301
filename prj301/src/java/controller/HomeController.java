@@ -5,6 +5,11 @@
 
 package controller;
 
+import context.AccountDAO;
+import context.EmployeeDAO;
+import context.PlanDAO;
+import entity.Plan;
+import entity.SchedualCampaign;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +17,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="LogoutController", urlPatterns={"/logout"})
-public class LogoutController extends HttpServlet {
-   
+@WebServlet(name="HomeController", urlPatterns={"/home"})
+public class HomeController extends HttpServlet {
+      AccountDAO dao = new AccountDAO(); 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -36,10 +41,10 @@ public class LogoutController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LogoutController</title>");  
+            out.println("<title>Servlet HomeController</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LogoutController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet HomeController at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,18 +59,20 @@ public class LogoutController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException {
-      // Lấy session hiện tại
-        HttpSession session = request.getSession(false); // Tránh tạo session mới nếu chưa có
-
-        if (session != null) {
-            // Hủy session
-            session.invalidate();
-        }
-
-        // Chuyển hướng về trang đăng nhập
-        response.sendRedirect("c_login.jsp");
+         PlanDAO pdao = new PlanDAO();
+        EmployeeDAO edao= new EmployeeDAO();
+        SchedualCampaign scdao = new SchedualCampaign();
+        List<Plan> Plist=pdao.getAllsevenday();
+        int sccount=scdao.countQuantity();
+        int Ecount=edao.countEmployee();
+        int pcount=pdao.countQuantity();
+        req.setAttribute("sccount", sccount);
+        req.setAttribute("Ecount", Ecount);
+        req.setAttribute("pcount", pcount);
+        req.setAttribute("Plist", Plist);
+        req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
     } 
 
     /** 

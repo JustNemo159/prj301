@@ -66,4 +66,6 @@ public class SchedualCampaign {
     public void setQuantity(int quantity) {
         Quantity = quantity;
     }
+
+
 }

@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -12,7 +13,8 @@
   <title>Đăng nhập</title>
   <link rel="icon" type="image/x-icon" href="Image/Avatar/icon_default.png">
   <style>
-    #logreg-forms {
+
+    #logreg-forms{
       font-family: sans-serif;
       background-color: #fff;
       padding: 40px 0px;
@@ -26,7 +28,7 @@
       border-radius: 6px;
     }
 
-    #logreg-forms .form-control {
+    #logreg-forms .form-control{
       border: 1px solid;
       height: 2.4rem;
       width: 28rem;
@@ -34,32 +36,42 @@
       padding: 0px 0.6rem;
     }
 
-    .form-check-label {
+    .form-check-label{
       display: block;
       font-size: 1rem;
       margin-bottom: 6px;
       color: #140C40;
       font-weight: 600;
       text-align: left;
+
     }
 
-    .flex {
+    .flex{
       display: flex;
     }
 
-    .form-login-body {
+    .form-login-body{
       padding-bottom: 35px;
       padding-top: 35px;
     }
 
-    .form-login-footer {
+    .reme-fogot,
+    .form-login-footer{
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       text-align: center;
       align-items: center;
     }
 
-    .btn-submit {
+    .form-switch{
+      text-decoration: none;
+    }
+
+    .non-padding{
+      padding: 0 !important;
+    }
+
+    .btn-submit{
       background-color: #FFF;
       height: 42px;
       padding: 7px 43px;
@@ -70,17 +82,17 @@
       border-radius: 20px;
     }
 
-    .social-login {
+    .social-login{
       display: flex;
       justify-content: center;
       width: 100%;
     }
 
-    .btn--with-icon {
+    .btn--with-icon{
       text-decoration: none;
     }
 
-    .btn {
+    .btn{
       height: 3rem;
       width: 11rem;
       border: 0;
@@ -93,7 +105,7 @@
       gap: 10px;
     }
 
-    #logreg-forms .social-login a {
+    #logreg-forms .social-login a{
       color: #fff;
       background-color: #dd4b39;
       border-color: rgba(0, 0, 0, 0.2);
@@ -101,8 +113,9 @@
       text-decoration: none;
     }
 
-    #logreg-forms .social-login a:hover {
+    #logreg-forms .social-login a:hover{
       background-color: #c23321;
+    ;
     }
   </style>
 </head>
@@ -115,17 +128,34 @@
         <h1 class="h3 mb-3 font-weight-normal" style="font-weight: bold; text-align: center; font-size: 2rem;">Đăng nhập</h1>
         <p style="text-align: center">Nhập chi tiết đăng nhập để có quyền truy cập</p>
       </div>
+      <c:set var="cookie" value="${pageContext.request.cookies}"/>
       <div class="form-login-body">
         <p class="form-check-label">Tên đăng nhập hoặc địa chỉ email</p>
-        <input name="email" type="text" class="form-control" placeholder="Tên đăng nhập/email" required="" autofocus=""><br>
+        <input name="email" type="text" value="${cookie.cuser.value}" class="form-control"
+               placeholder="Tên đăng nhập/email" required="" autofocus=""><br>
         <p class="form-check-label">Mật khẩu</p>
-        <input name="pass" type="password" class="form-control" placeholder="Nhập mật khẩu" required="">
+        <input name="pass" type="password" value="${cookie.cpass.value}" class="form-control"
+               placeholder="Nhập mật khẩu" required="">
+        <div class="reme-fogot">
+          <div class="flex">
+            <input name="rem" value="1" type="checkbox" ${(cookie.crem!=null?'checked':'')} class="form-check-input"
+                   id="exampleCheck1" />
+            <label class="form-check-label" for="exampleCheck1">&nbsp;Ghi nhớ đăng nhập</label>
+          </div>
+
+        </div>
       </div>
 
       <div class="form-login-footer">
+
         <button class="btn-submit">Đăng nhập</button>
       </div>
       <p class="text-danger" style="color:#140C40">${msg}</p>
+
+
+
+
+
     </form>
   </div>
 </div>
@@ -136,3 +166,4 @@
 </body>
 
 </html>
+
