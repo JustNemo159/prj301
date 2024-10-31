@@ -8,7 +8,6 @@ package controller;
 import context.PlanDAO;
 import entity.Plan;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -48,7 +47,7 @@ public class PlanController extends HttpServlet {
             req.getRequestDispatcher("editPlan.jsp").forward(req, resp);
 
         } else {
-            // Mặc định: hiển thị danh sách plan
+            // hiển thị danh sách plan
             List<Plan> pList;
 
             if (searchName != null && !searchName.trim().isEmpty()) {

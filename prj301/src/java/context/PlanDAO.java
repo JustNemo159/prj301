@@ -18,13 +18,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlanDAO extends DBContext implements IDAO<Plan>{
+public class PlanDAO extends DBContext implements IDAO<Plan> {
 
     @Override
     public List<Plan> getAll() {
-        String sql = "select * from [plan]";
+      String sql = "SELECT [PlanID], " +
+                 "       [PlanName], " +
+                 "       [StartDate], " +
+                 "       [EndDate], " +
+                 "       [DepartmentID] " +
+                 "FROM [Plan]";
         List<Plan> plans = new ArrayList<>();
-        try{
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -45,11 +50,11 @@ public class PlanDAO extends DBContext implements IDAO<Plan>{
     }
 
     public List<Plan> getAllsevenday() {
-        String sql = "SELECT * \n" +
-                "FROM [Plan]\n" +
-                "WHERE EndDate >= DATEADD(day, -7, GETDATE());\n";
+        String sql = "SELECT * \n"
+                + "FROM [Plan]\n"
+                + "WHERE EndDate >= DATEADD(day, -7, GETDATE());\n";
         List<Plan> plans = new ArrayList<>();
-        try{
+        try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -68,6 +73,7 @@ public class PlanDAO extends DBContext implements IDAO<Plan>{
         }
         return plans;
     }
+
     @Override
     public void add(Plan plan) {
         String sql = "INSERT INTO [plan] VALUES(?,?,?,?,?,?)";
@@ -128,7 +134,6 @@ public class PlanDAO extends DBContext implements IDAO<Plan>{
         }
     }
 
-
     @Override
     public Plan getById(int planID) {
         String query = "SELECT * FROM [Plan] WHERE PlanID = ?";
@@ -152,20 +157,21 @@ public class PlanDAO extends DBContext implements IDAO<Plan>{
         return null; // Trả về null nếu không tìm thấy bản ghi
     }
 
-    public int countQuantity(){
-        int count=0;
-        String sql="SELECT COUNT(*) AS totalQantity FROM [Plan];\n";
-        try{
-            PreparedStatement pr=connection.prepareStatement(sql);
-            ResultSet rs=pr.executeQuery();
-            while(rs.next()){
-                count=rs.getInt("totalQantity");
+    public int countQuantity() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS totalQantity FROM [Plan];\n";
+        try {
+            PreparedStatement pr = connection.prepareStatement(sql);
+            ResultSet rs = pr.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("totalQantity");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return count;
     }
+
     public List<Plan> searchPlansByName(String name) {
         List<Plan> result = new ArrayList<>();
         String query = "SELECT * FROM [Plan] WHERE PlanName LIKE ?";

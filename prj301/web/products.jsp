@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Product
-    Created on : Oct 31, 2024, 6:55:00 PM
-    Author     : Admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -34,14 +28,10 @@
     <div class="main-content">
         <h1>Product Manager</h1>
 
-        <!-- Add Employee Button -->
-        <div class="button-container">
-            <a href="AddProduct.jsp" class="add-button">Thêm sản phẩm</a>
-        </div>
         <!-- Form Tìm Kiếm -->
         <div class="search-container">
             <form action="product" method="get">
-                <input type="text" name="searchName" placeholder="Nhập sản phẩm" required>
+                <input type="text" name="searchName" placeholder="Texxt here" required>
                 <button type="submit">Tìm kiếm</button>
             </form>
         </div>
@@ -62,11 +52,7 @@
                         <td>${pList.productId}</td>
                         <td>${pList.productName}</td>
 
-                        <td>
-                            <a href="product?action=edit&id=${pList.productId}" class="edit-button">Sửa</a>
-                            <a href="product?action=delete&id=${pList.productId}" class="delete-button" onclick="return confirm('Bạn có chắc chắn muốn xóa công nhân này?');">Xóa</a>
-
-                        </td>
+                       
                     </tr>
                 </c:forEach>
                 </tbody>
