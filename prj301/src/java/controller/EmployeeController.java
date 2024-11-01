@@ -66,6 +66,7 @@ public class EmployeeController extends HttpServlet {
             Employee employee = eDao.getById(employeeID);
             req.setAttribute("employee", employee);
             req.getRequestDispatcher("EditEmployee.jsp").forward(req, resp);
+             req.getRequestDispatcher("AddEmployee.jsp").forward(req, resp);
 
         } else if ("delete".equals(action)) {
             // Xóa công nhân theo ID
@@ -91,8 +92,31 @@ public class EmployeeController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lấy các thông tin cần cập nhật từ request
+protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String action = req.getParameter("action");
+    EmployeeDAO eDao = new EmployeeDAO();
+
+    if ("add".equals(action)) {
+        // Xử lý thêm nhân viên mới
+        String employeeName = req.getParameter("name");
+        boolean gender = Boolean.parseBoolean(req.getParameter("gender"));
+        String address = req.getParameter("address");
+        String dob = req.getParameter("dob");
+        int roleID = Integer.parseInt(req.getParameter("roleID"));
+        int departmentID = Integer.parseInt(req.getParameter("departmentID"));
+        long salary = Long.parseLong(req.getParameter("salary"));
+
+        // Tạo đối tượng Employee mới
+        Employee newEmployee = new Employee(0, employeeName, gender, address, dob, roleID, departmentID, salary);
+
+        // Thêm nhân viên mới vào database
+        eDao.add(newEmployee);
+
+        // Chuyển hướng về trang danh sách nhân viên
+        resp.sendRedirect("employee");
+        
+    } else if ("edit".equals(action)) {
+        // Xử lý cập nhật thông tin nhân viên
         int employeeID = Integer.parseInt(req.getParameter("id"));
         String employeeName = req.getParameter("name");
         boolean gender = Boolean.parseBoolean(req.getParameter("gender"));
@@ -101,7 +125,6 @@ public class EmployeeController extends HttpServlet {
         long salary = Long.parseLong(req.getParameter("salary"));
 
         // Lấy RoleID và DepartmentID hiện tại từ cơ sở dữ liệu
-        EmployeeDAO eDao = new EmployeeDAO();
         Employee currentEmployee = eDao.getById(employeeID);
         int roleID = currentEmployee.getRoleID();
         int departmentID = currentEmployee.getDepartmentID();
@@ -114,6 +137,10 @@ public class EmployeeController extends HttpServlet {
 
         // Chuyển hướng về trang danh sách công nhân sau khi cập nhật thành công
         resp.sendRedirect("employee");
+    } else {
+        // Xử lý trường hợp không có action hoặc action không hợp lệ
+        resp.sendRedirect("employee");
     }
+}
 }
 

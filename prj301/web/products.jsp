@@ -50,9 +50,7 @@
                 <c:forEach var="pList" items="${requestScope.pList}" varStatus="loop">
                     <tr>
                         <td>${pList.productId}</td>
-                        <td>${pList.productName}</td>
-
-                       
+                        <td>${pList.productName}</td> 
                     </tr>
                 </c:forEach>
                 </tbody>

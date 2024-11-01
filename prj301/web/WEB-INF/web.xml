@@ -24,6 +24,10 @@
         <servlet-name>PlanController</servlet-name>
         <servlet-class>controller.PlanController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AttendanceController</servlet-name>
+        <servlet-class>controller.AttendanceController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EmployeeController</servlet-name>
         <url-pattern>/employee</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>PlanController</servlet-name>
         <url-pattern>/plan</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendanceController</servlet-name>
+        <url-pattern>/attendance</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>login</welcome-file>
