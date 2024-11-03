@@ -21,15 +21,10 @@ import java.util.List;
 public class PlanDAO extends DBContext implements IDAO<Plan> {
 
     @Override
-    public List<Plan> getAll() {
-      String sql = "SELECT [PlanID], " +
-                 "       [PlanName], " +
-                 "       [StartDate], " +
-                 "       [EndDate], " +
-                 "       [DepartmentID] " +
-                 "FROM [Plan]";
+     public List<Plan> getAll() {
+        String sql = "select * from [plan];";
         List<Plan> plans = new ArrayList<>();
-        try {
+        try{
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -48,6 +43,7 @@ public class PlanDAO extends DBContext implements IDAO<Plan> {
         }
         return plans;
     }
+
 
     public List<Plan> getAllsevenday() {
         String sql = "SELECT * \n"
