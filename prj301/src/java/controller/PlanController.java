@@ -10,6 +10,7 @@ import entity.Plan;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,58 +21,40 @@ import java.util.List;
  * @author Admin
  */
 public class PlanController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PlanController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PlanController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
-     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        String searchName = req.getParameter("searchName"); // Lấy tham số tìm kiếm
+        String searchName = req.getParameter("searchName");
         PlanDAO pDao = new PlanDAO();
 
-        // Kiểm tra hành động (edit hoặc delete)
+        // Đọc cookies nếu có
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("lastPlanInfo")) {
+                    // Giải mã thông tin từ cookie và set vào request attribute
+                    String[] planInfo = cookie.getValue().split("\\|");
+                    if (planInfo.length >= 4) {
+                        req.setAttribute("lastPlanName", planInfo[0]);
+                        req.setAttribute("lastStartDate", planInfo[1]);
+                        req.setAttribute("lastEndDate", planInfo[2]);
+                        req.setAttribute("lastQuantity", planInfo[3]);
+                    }
+                }
+            }
+        }
+
         if ("edit".equals(action)) {
-            // Chuyển tiếp đến form chỉnh sửa
             int planID = Integer.parseInt(req.getParameter("id"));
             Plan plan = pDao.getById(planID);
             req.setAttribute("plan", plan);
             req.getRequestDispatcher("editPlan.jsp").forward(req, resp);
 
         } else if ("delete".equals(action)) {
-            // Xóa plan theo ID
             int planID = Integer.parseInt(req.getParameter("id"));
             pDao.delete(planID);
-            resp.sendRedirect("plan"); // Tải lại trang sau khi xóa
+            resp.sendRedirect("plan");
 
         } else if ("add".equals(action)) {
             Plan plan = new Plan();
@@ -79,17 +62,12 @@ public class PlanController extends HttpServlet {
             req.getRequestDispatcher("editPlan.jsp").forward(req, resp);
 
         } else {
-            // hiển thị danh sách plan
             List<Plan> pList;
-
             if (searchName != null && !searchName.trim().isEmpty()) {
-                // Nếu có tham số tìm kiếm, gọi phương thức tìm kiếm
                 pList = pDao.searchPlansByName(searchName);
             } else {
-                // Nếu không có tham số tìm kiếm, lấy tất cả kế hoạch
                 pList = pDao.getAll();
             }
-
             req.setAttribute("pList", pList);
             req.getRequestDispatcher("Plan.jsp").forward(req, resp);
         }
@@ -97,28 +75,44 @@ public class PlanController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lấy các thông tin cần cập nhật từ request
-        int planID = Integer.parseInt(req.getParameter("id"));
-        String planName = req.getParameter("name");
-        String startDate = req.getParameter("startDate");
-        String endDate = req.getParameter("endDate");
-        int quantity = Integer.parseInt(req.getParameter("quantity"));
-
-        // Lấy DepartmentID hiện tại từ cơ sở dữ liệu
+        String action = req.getParameter("action");
         PlanDAO pDao = new PlanDAO();
-        Plan currentPlan = pDao.getById(planID);
-        int departmentID = currentPlan.getDepartmentID();
-        String checkID = String.valueOf(departmentID);
-        if(checkID.equals(null)){
-            departmentID=1;
+
+        if ("add".equals(action)) {
+            // Lấy các thông tin từ form
+            String planName = req.getParameter("name");
+            String startDate = req.getParameter("startDate");
+            String endDate = req.getParameter("endDate");
+            int quantity = Integer.parseInt(req.getParameter("quantity"));
+
+            // Tạo cookie chứa thông tin kế hoạch vừa thêm
+            String planInfo = String.format("%s|%s|%s|%d", 
+                planName, startDate, endDate, quantity);
+            Cookie planCookie = new Cookie("lastPlanInfo", planInfo);
+            planCookie.setMaxAge(24 * 60 * 60); // Cookie tồn tại 24 giờ
+            resp.addCookie(planCookie);
+
+            // Tạo đối tượng Plan mới và thêm vào database
+            Plan newPlan = new Plan();
+            newPlan.setPlanName(planName);
+            newPlan.setStartDate(startDate);
+            newPlan.setEndDate(endDate);
+            newPlan.setQuantity(quantity);
+            pDao.add(newPlan);
+
+            // Chuyển hướng về dashboard để hiển thị thông tin
+            resp.sendRedirect("/plan");
+
+        } else if ("edit".equals(action)) {
+            int planID = Integer.parseInt(req.getParameter("id"));
+            String planName = req.getParameter("name");
+            String startDate = req.getParameter("startDate");
+            String endDate = req.getParameter("endDate");
+            int quantity = Integer.parseInt(req.getParameter("quantity"));
+
+            Plan updatedPlan = new Plan(planID, planName, startDate, endDate, quantity, 0);
+            pDao.update(updatedPlan);
+            resp.sendRedirect("plan");
         }
-        // Tạo đối tượng Plan với các thông tin đã cập nhật
-        Plan updatedPlan = new Plan(planID, planName, startDate, endDate, quantity, departmentID);
-
-        // Thực hiện cập nhật
-        pDao.update(updatedPlan);
-
-        // Chuyển hướng về trang danh sách kế hoạch sau khi cập nhật thành công
-        resp.sendRedirect("plan");
     }
 }

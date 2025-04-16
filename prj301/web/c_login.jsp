@@ -126,11 +126,11 @@
     <form class="form-login" action="login" method="post">
       <div class="form-login-header">
         <h1 class="h3 mb-3 font-weight-normal" style="font-weight: bold; text-align: center; font-size: 2rem;">Đăng nhập</h1>
-        <p style="text-align: center">Nhập chi tiết đăng nhập để có quyền truy cập</p>
+        <p style="text-align: center"></p>
       </div>
       <c:set var="cookie" value="${pageContext.request.cookies}"/>
       <div class="form-login-body">
-        <p class="form-check-label">Tên đăng nhập hoặc địa chỉ email</p>
+        <p class="form-check-label">Tên đăng nhập </p>
         <input name="email" type="text" value="${cookie.cuser.value}" class="form-control"
                placeholder="Tên đăng nhập/email" required="" autofocus=""><br>
         <p class="form-check-label">Mật khẩu</p>

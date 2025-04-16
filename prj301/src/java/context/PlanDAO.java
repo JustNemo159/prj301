@@ -70,27 +70,17 @@ public class PlanDAO extends DBContext implements IDAO<Plan> {
         return plans;
     }
 
-    @Override
     public void add(Plan plan) {
-        String sql = "INSERT INTO [plan] VALUES(?,?,?,?,?,?)";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, plan.getPlanID());
-            st.setString(2, plan.getPlanName());
-
-            // Chuyển đổi StartDate và EndDate từ String sang java.sql.Date
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date startDate = new Date(format.parse(plan.getStartDate()).getTime());
-            Date endDate = new Date(format.parse(plan.getEndDate()).getTime());
-
-            st.setDate(3, (java.sql.Date) startDate);
-            st.setDate(4, (java.sql.Date) endDate);
-            st.setInt(5, plan.getQuantity());
-            st.setInt(6, plan.getDepartmentID());
+        String sql = "INSERT INTO [Plan] (PlanName, StartDate, EndDate, Quantity) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, plan.getPlanName());
+            st.setDate(2, java.sql.Date.valueOf(plan.getStartDate()));
+            st.setDate(3, java.sql.Date.valueOf(plan.getEndDate()));
+            st.setInt(4, plan.getQuantity());
 
             st.executeUpdate();
-        } catch (SQLException | ParseException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error adding plan: " + e.getMessage(), e);
         }
     }
 

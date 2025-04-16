@@ -28,10 +28,6 @@
                     <input type="number" id="schEmpId" name="schEmpId" required>
                 </div>
                 <div class="form-group">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" step="0.01" required>
-                </div>
-                <div class="form-group">
                     <label for="alpha">Alpha:</label>
                     <input type="number" id="alpha" name="alpha" step="0.01" required>
                 </div>
@@ -46,7 +42,6 @@
                     <tr>
                         <th>Attendance ID</th>
                         <th>Schedule Employee ID</th>
-                        <th>Quantity</th>
                         <th>Alpha</th>
                     </tr>
                 </thead>
@@ -55,7 +50,6 @@
                         <tr>
                             <td>${attendance.attendanceId}</td>
                             <td>${attendance.schEmpId}</td>
-                            <td>${attendance.quantity}</td>
                             <td>${attendance.alpha}</td>
                         </tr>
                     </c:forEach>
@@ -75,7 +69,7 @@
                     break;
                 }
             }
-        }
+        };
     </script>
 </body>
 </html>

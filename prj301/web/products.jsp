@@ -38,7 +38,7 @@
 
         <!-- Table for Employee List -->
         <div class="recent-activity">
-            <h2>Danh sách công nhân</h2>
+            <h2>Danh sách sản phẩm</h2>
             <table>
                 <thead>
                 <tr>
